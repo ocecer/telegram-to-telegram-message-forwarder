@@ -1,2 +1,3 @@
 python-decouple
 telethon
+urlextract
