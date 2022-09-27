@@ -13,6 +13,8 @@
         2nd FROM_CHANNEL to 2nd TO_CHANNEL
         3rd FROM_CHANNEL to 3rd TO_CHANNEL
         ii.	If you enter 0 bot will forward messages from all FROM_CHANNEL to all TO_CHANNEL
+    
+    f. "FORWARD_FROM_YOUR_OWN_CHANNELS" – Enter 1 or 0. If you enter 1 you can forward messages from your own channel to your own channel. 0, you cannot forward from your own channel.
 
     f.	“BLACKLIST_WORDS” – Enter blacklisted word(s) split by ";" or just one blacklist word.  
 

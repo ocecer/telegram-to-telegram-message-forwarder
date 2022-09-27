@@ -2,3 +2,5 @@
 bot.session
 ReadMe.docx
 ReadMe.pdf
+passenger_wsgi.py
+__pycache__

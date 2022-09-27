@@ -18,35 +18,39 @@ except Exception as ap:
 
 if SEPARATE_CHANNELS:
     for i in range(len(FROM)):
-        @BotzHubUser.on(events.NewMessage(incoming=True, chats=FROM[i]))
+        @BotzHubUser.on(events.NewMessage(outgoing=outgoing, incoming=True, chats=FROM[i]))
         async def sender_bH(event):
             userMessage = str(event.message.message)
             userMessage = checkMgs(userMessage)
-            event.message.message = userMessage
 
-            try:
-                await BotzHubUser.send_message(
-                    TO[i],
-                    event.message
-                )
-            except Exception as e:
-                print(e)
+            if len(userMessage) > 0:
+                event.message.message = userMessage
+
+                try:
+                    await BotzHubUser.send_message(
+                        TO[i],
+                        event.message
+                    )
+                except Exception as e:
+                    print(e)
 
 else:
-    @BotzHubUser.on(events.NewMessage(incoming=True, chats=FROM))
+    @BotzHubUser.on(events.NewMessage(outgoing=outgoing, incoming=True, chats=FROM))
     async def sender_bH(event):
         userMessage = str(event.message.message)
         userMessage = checkMgs(userMessage)
-        event.message.message = userMessage
 
-        for i in TO:
-            try:
-                await BotzHubUser.send_message(
-                    i,
-                    event.message
-                )
-            except Exception as e:
-                print(e)
+        if len(userMessage) > 0:
+            event.message.message = userMessage
+
+            for i in TO:
+                try:
+                    await BotzHubUser.send_message(
+                        i,
+                        event.message
+                    )
+                except Exception as e:
+                    print(e)
 
 
 def checkMgs(userMessage):
@@ -58,7 +62,7 @@ def checkMgs(userMessage):
         if len(urls) > 0:
             userMessage = ""
             return userMessage
-       
+
     if len(THROW_IF_MESSAGE_CONSIST_WORDS) > 0:
         for word in THROW_IF_MESSAGE_CONSIST_WORDS:
             if word in userMessage:
@@ -73,7 +77,7 @@ def checkMgs(userMessage):
             for url in urls:
                 if url in userMessage:
                     userMessage = userMessage.replace(url, "")
-        
+
     if len(BLACKLIST_WORDS) > 0:
         if len(CHANGE_FOR) == 0:
             for word in BLACKLIST_WORDS:
@@ -93,7 +97,7 @@ def checkMgs(userMessage):
                 for word in BLACKLIST_WORDS:
                     if word in userMessage:
                         userMessage = userMessage.replace(word, "")
- 
+
     return userMessage
 
 
