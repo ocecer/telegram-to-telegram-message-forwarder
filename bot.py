@@ -10,47 +10,44 @@ basicConfig(
 print("Starting...")
 
 try:
-    BotzHubUser = TelegramClient(StringSession(SESSION), APP_ID, API_HASH)
-    BotzHubUser.start()
+    BotUser = TelegramClient(StringSession(SESSION), APP_ID, API_HASH)
+    BotUser.start()
 except Exception as ap:
     print(f"ERROR - {ap}")
     exit(1)
 
-if SEPARATE_CHANNELS:
-    for i in range(len(FROM)):
-        @BotzHubUser.on(events.NewMessage(outgoing=outgoing, incoming=True, chats=FROM[i]))
-        async def sender_bH(event):
-            userMessage = str(event.message.message)
-            userMessage = checkMgs(userMessage)
 
-            if len(userMessage) > 0:
-                event.message.message = userMessage
+@BotUser.on(events.NewMessage(outgoing=outgoing, incoming=True, chats=FROM))
+async def sender_bH(event):
+    sender = await event.get_sender()
+    sender_id = sender.id
+    userMessage = str(event.message.message)
+    userMessage = checkMgs(userMessage)
+
+    if len(userMessage) > 0:
+        event.message.message = userMessage
+
+        for i in range(len(TO)):
+            if SEPARATE_CHANNELS:
+                sendTo = find_index_of_channel(sender_id, FROM)
 
                 try:
-                    await BotzHubUser.send_message(
-                        TO[i],
-                        event.message
-                    )
+                    await BotUser.send_message(TO[sendTo], event.message)
                 except Exception as e:
                     print(e)
 
-else:
-    @BotzHubUser.on(events.NewMessage(outgoing=outgoing, incoming=True, chats=FROM))
-    async def sender_bH(event):
-        userMessage = str(event.message.message)
-        userMessage = checkMgs(userMessage)
-
-        if len(userMessage) > 0:
-            event.message.message = userMessage
-
-            for i in TO:
+                break
+            else:
                 try:
-                    await BotzHubUser.send_message(
-                        i,
-                        event.message
-                    )
+                    await BotUser.send_message(TO[i], event.message)
                 except Exception as e:
                     print(e)
+
+
+def find_index_of_channel(findIndexOf, findIndexIn):
+    for i in range(len(findIndexIn)):
+        if str(findIndexOf) in str(findIndexIn[i]):
+            return i
 
 
 def checkMgs(userMessage):
@@ -102,4 +99,4 @@ def checkMgs(userMessage):
 
 
 print("Bot has started.")
-BotzHubUser.run_until_disconnected()
+BotUser.run_until_disconnected()

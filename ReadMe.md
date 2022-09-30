@@ -16,18 +16,18 @@
     
     f. "FORWARD_FROM_YOUR_OWN_CHANNELS" – Enter 1 or 0. If you enter 1 you can forward messages from your own channel to your own channel. 0, you cannot forward from your own channel.
 
-    f.	“BLACKLIST_WORDS” – Enter blacklisted word(s) split by ";" or just one blacklist word.  
+    g.	“BLACKLIST_WORDS” – Enter blacklisted word(s) split by ";" or just one blacklist word.  
 
-    g.	“CHANGE_FOR” – There are 3 ways to use CHANGE_FOR
+    h.	“CHANGE_FOR” – There are 3 ways to use CHANGE_FOR
         i.	If CHANGE_FOR will be empty, bot will delete all the BLACKLIST_WORDS from the message and forward.
         ii.	If you will enter one variable for CHANGE_FOR, bot will change all the BLACKLIST_WORDS from the messages as CHANGE_FOR and forward.
         iii.	If you will enter CHANGE_FOR for each BLACKLIST_WORDS, bot will change all the BLACKLIST_WORDS respectively with the CHANGE_FOR from the message and forward. (If you will not enter CHANGE_FOR for each BLACKLIST_WORDS, bot will just delete the BLACKLIST_WORDS. 
     
-    h. "THROW_IF_MESSAGE_CONSIST_WORDS" – Enter word(s) split by ";" or just one word. If message consists any of the words defined here, the message will not be forwarded.
+    i. "THROW_IF_MESSAGE_CONSIST_WORDS" – Enter word(s) split by ";" or just one word. If message consists any of the words defined here, the message will not be forwarded.
 
-    i. "THROW_IF_MESSAGE_CONSIST_URL" – Enter 1 or 0. If you enter 1, bot will not forward the message if it contains any URL.
+    k. "THROW_IF_MESSAGE_CONSIST_URL" – Enter 1 or 0. If you enter 1, bot will not forward the message if it contains any URL.
 
-    j. "DELETE_URL_FROM_MESSAGE" – Enter 1 or 0. If you enter 1, bot will forward the message but URL(s) will be deleted from the message.
+    k. "DELETE_URL_FROM_MESSAGE" – Enter 1 or 0. If you enter 1, bot will forward the message but URL(s) will be deleted from the message.
 
     ATTENTION: If you will enter 1 for the THROW_IF_MESSAGE_CONSIST_URL, DELETE_URL_FROM_MESSAGE should be 0, reversible. But if you will enter 0 or 1 for both THROW_IF_MESSAGE_CONSIST_URL and DELETE_URL_FROM_MESSAGE, the bot will not proccess URL(s)'s in the message and directly forward the URL(s).
 
