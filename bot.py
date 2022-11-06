@@ -12,15 +12,17 @@ print("Starting...")
 try:
     BotUser = TelegramClient(StringSession(SESSION), APP_ID, API_HASH)
     BotUser.start()
-except Exception as ap:
-    print(f"ERROR - {ap}")
+except Exception as e:
+    print(f"ERROR - {e}")
     exit(1)
 
 
 @BotUser.on(events.NewMessage(outgoing=outgoing, incoming=True, chats=FROM))
 async def sender_bH(event):
-    sender = await event.get_sender()
-    sender_id = sender.id
+    # sender = await event.get_sender()
+    # sender_id = sender.id
+    peerUser = str(event.message.peer_id)
+    sender_id = peerUser[peerUser.index("=")+1:len(peerUser)-1]
     userMessage = str(event.message.message)
     userMessage = checkMgs(userMessage)
 
@@ -50,6 +52,29 @@ def find_index_of_channel(findIndexOf, findIndexIn):
             return i
 
 
+def blacklistCheck(userMessage):
+    if len(CHANGE_FOR) == 0:
+        for word in BLACKLIST_WORDS:
+            if word in userMessage:
+                userMessage = userMessage.replace(word, "")
+    elif len(BLACKLIST_WORDS) >= 1 and len(CHANGE_FOR) == 1:
+        for word in BLACKLIST_WORDS:
+            if word in userMessage:
+                userMessage = userMessage.replace(word, CHANGE_FOR[0])
+    else:
+        if len(BLACKLIST_WORDS) == len(CHANGE_FOR):
+            for i in range(len(BLACKLIST_WORDS)):
+                word = BLACKLIST_WORDS[i]
+                if word in userMessage:
+                    userMessage = userMessage.replace(word, CHANGE_FOR[i])
+        else:
+            for word in BLACKLIST_WORDS:
+                if word in userMessage:
+                    userMessage = userMessage.replace(word, "")
+
+    return userMessage
+
+
 def checkMgs(userMessage):
 
     if THROW_IF_MESSAGE_CONSIST_URL:
@@ -75,28 +100,25 @@ def checkMgs(userMessage):
                 if url in userMessage:
                     userMessage = userMessage.replace(url, "")
 
-    if len(BLACKLIST_WORDS) > 0:
-        if len(CHANGE_FOR) == 0:
-            for word in BLACKLIST_WORDS:
-                if word in userMessage:
-                    userMessage = userMessage.replace(word, "")
-        elif len(BLACKLIST_WORDS) >= 1 and len(CHANGE_FOR) == 1:
-            for word in BLACKLIST_WORDS:
-                if word in userMessage:
-                    userMessage = userMessage.replace(word, CHANGE_FOR[0])
-        else:
-            if len(BLACKLIST_WORDS) == len(CHANGE_FOR):
-                for i in range(len(BLACKLIST_WORDS)):
-                    word = BLACKLIST_WORDS[i]
-                    if word in userMessage:
-                        userMessage = userMessage.replace(word, CHANGE_FOR[i])
+    if len(FORWARD_IF_MESSAGE_CONSIST_WORDS) > 0:
+        found = False
+        for word in FORWARD_IF_MESSAGE_CONSIST_WORDS:
+            print(word)
+            if word in userMessage:
+                found = True
+                userMessage = blacklistCheck(userMessage)
+                break
             else:
-                for word in BLACKLIST_WORDS:
-                    if word in userMessage:
-                        userMessage = userMessage.replace(word, "")
+                continue
+
+        if not found:
+            userMessage = ""
+
+    else:
+        userMessage = blacklistCheck(userMessage)
 
     return userMessage
 
 
-print("Bot has started.")
+print("Bot started.")
 BotUser.run_until_disconnected()
