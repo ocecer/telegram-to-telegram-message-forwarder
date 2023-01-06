@@ -1,11 +1,11 @@
 1.	Open .env file and edit fields.
     a.	“APP_ID” and “API_HASH” - Can be found in https://my.telegram.org
 
-    b.	 “SESSION” – Can be created from the following app. Run the app and follow instructions. https://replit.com/@TeamUltroid/UltroidStringSession
+    b.	“SESSION” – Can be created from the following app. Run the app and follow instructions. https://replit.com/@TeamUltroid/UltroidStringSession
 
-    c.	“FROM_CHANNEL” – Channel ID(s) of the channel(s) you will be forwarding messages from. If you will add more than 1 channel you should separate channel ID(s) with “;“.
+    c.	“FROM_CHANNEL” – Channel ID(s) of the channel(s) you will be forwarding messages from. If you will add more than 1 channel you should separate channel ID(s) with “;“. Can be found by forwarding the message from channel/chat to @userinfobot.
 
-    d.	“TO_CHANNEL” – Channel ID(s) of the channel(s) you will be forwarding messages to. If you will add more than 1 channel you should separate channel ID(s) with “;“. 
+    d.	“TO_CHANNEL” – Channel ID(s) of the channel(s) you will be forwarding messages to. If you will add more than 1 channel you should separate channel ID(s) with “;“. Can be found by forwarding the message from channel/chat to @userinfobot.
 
     e.	“SEPARATE_CHANNELS” – Enter 1 or 0. 
         i.	If you enter 1 bot will forward messages respectively
@@ -35,3 +35,5 @@
 
 2.	Clone the repo in your Heroku, CPanel or any any other platform where you can run a python app.
 3.	Run: python3 bot.py
+
+Important note: None of the fields should end with ";". Semicolon ";" is just seperator, if you will use it in the end of the field, bot wont be able to work.

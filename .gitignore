@@ -4,3 +4,5 @@ ReadMe.docx
 ReadMe.pdf
 passenger_wsgi.py
 __pycache__
+test*.py
+bot*.py

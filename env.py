@@ -15,7 +15,16 @@ FORWARD_IF_MESSAGE_CONSIST_WORDS_ = config("FORWARD_IF_MESSAGE_CONSIST_WORDS")
 THROW_IF_MESSAGE_CONSIST_URL_ = config("THROW_IF_MESSAGE_CONSIST_URL")
 DELETE_URL_FROM_MESSAGE_ = config("DELETE_URL_FROM_MESSAGE")
 
+FROM_ = FROM_.strip()
+if FROM_.endswith(";"):
+    FROM_ = FROM_.rstrip(FROM_[-1])
+
 FROM = [int(i) for i in FROM_.split(";")]
+
+TO_ = TO_.strip()
+if TO_.endswith(";"):
+    TO_ = TO_.rstrip(TO_[-1])
+
 TO = [int(i) for i in TO_.split(";")]
 
 trueCondition = ["1", "True", "true", "TRUE", "Yes", "yes", "YES"]
@@ -49,21 +58,39 @@ if len(FROM) == len(TO) and SEPARATE_CHANNELS:
 else:
     SEPARATE_CHANNELS = False
 
+BLACKLIST_WORDS_ = BLACKLIST_WORDS_.strip()
+if BLACKLIST_WORDS_.endswith(";"):
+    BLACKLIST_WORDS_ = BLACKLIST_WORDS_.rstrip(BLACKLIST_WORDS_[-1])
+
 if len(BLACKLIST_WORDS_) == 0:
     BLACKLIST_WORDS = []
 else:
     BLACKLIST_WORDS = [str(i) for i in BLACKLIST_WORDS_.split(";")]
+
+CHANGE_FOR_ = CHANGE_FOR_.strip()
+if CHANGE_FOR_.endswith(";"):
+    CHANGE_FOR_ = CHANGE_FOR_.rstrip(CHANGE_FOR_[-1])
 
 if len(CHANGE_FOR_) == 0:
     CHANGE_FOR = []
 else:
     CHANGE_FOR = [str(i) for i in CHANGE_FOR_.split(";")]
 
+THROW_IF_MESSAGE_CONSIST_WORDS_ = THROW_IF_MESSAGE_CONSIST_WORDS_.strip()
+if THROW_IF_MESSAGE_CONSIST_WORDS_.endswith(";"):
+    THROW_IF_MESSAGE_CONSIST_WORDS_ = THROW_IF_MESSAGE_CONSIST_WORDS_.rstrip(
+        THROW_IF_MESSAGE_CONSIST_WORDS_[-1])
+
 if len(THROW_IF_MESSAGE_CONSIST_WORDS_) == 0:
     THROW_IF_MESSAGE_CONSIST_WORDS = []
 else:
     THROW_IF_MESSAGE_CONSIST_WORDS = [
         str(i) for i in THROW_IF_MESSAGE_CONSIST_WORDS_.split(";")]
+
+FORWARD_IF_MESSAGE_CONSIST_WORDS_ = FORWARD_IF_MESSAGE_CONSIST_WORDS_.strip()
+if FORWARD_IF_MESSAGE_CONSIST_WORDS_.endswith(";"):
+    FORWARD_IF_MESSAGE_CONSIST_WORDS_ = FORWARD_IF_MESSAGE_CONSIST_WORDS_.rstrip(
+        FORWARD_IF_MESSAGE_CONSIST_WORDS_[-1])
 
 if len(FORWARD_IF_MESSAGE_CONSIST_WORDS_) == 0:
     FORWARD_IF_MESSAGE_CONSIST_WORDS = []
